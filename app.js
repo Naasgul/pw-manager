@@ -1,40 +1,70 @@
-/* process.argv.forEach((val, index) => {
-  console.log(`${index}: ${val}`);
-});
- */
-
-/* const readline = require("readline").createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-readline.question(`What's your name?`, (name) => {
-  console.log(`Hi ${name}!`);
-  readline.close();
-}); */
-
-/*  const args = require("minimist")(process.argv.slice(2));
-
-console.log(args["name"]); //joe */
-
 const inquirer = require("inquirer");
 
-let questions = [
+const args = process.argv.slice(2);
+
+const passwordName = args[0];
+
+const masterPassword = "Test";
+
+const fs = require("fs").promises;
+
+async function getData() {
+  const promise = await fs.readFile("./db.json", "utf8");
+  const data = await JSON.parse(promise);
+  return data;
+}
+
+const questions = [
   {
     type: "input",
     name: "name",
     message: "What's your name?",
   },
   {
+    type: "checkbox",
+    name: "mood",
+    message: "How are you doing?",
+    choices: ["good", "bad"],
+  },
+  {
     type: "password",
     mask: "*",
     name: "password",
     message: "Enter your password:",
-    validate: "Lucas",
   },
 ];
 
-inquirer.prompt(questions).then((answers) => {
-  console.log(`Hi ${answers["name"]}!`);
-  console.log(`Korrekt!`);
-});
+async function validateAccess() {
+  const answers = await inquirer.prompt(questions);
+  const passwordSafe = await getData();
+
+  if (answers.mood.includes("good")) {
+    console.log(`Very good, ${answers.name} `);
+  } else if (answers.mood.includes("bad")) {
+    console.log(`I'm sorry, ${answers.name}`);
+  }
+
+  if (masterPassword === answers.password) {
+    console.log(`Correct Password, ${answers.name} `);
+  } else {
+    console.log(`Wrong Password`);
+  }
+  const args = process.argv.slice(2);
+  const passwordName = args[0];
+  const newPasswordValue = args[1];
+
+  if (newPasswordValue) {
+    passwordSafe[passwordName] = newPasswordValue;
+    fs.writeFile("./db.json", JSON.stringify(passwordSafe, null, 2));
+    console.log("Your password was changed successfully");
+  } else {
+    const password = passwordSafe[passwordName];
+    if (password) {
+      console.log(`${passwordName}: ${password}`);
+    } else {
+      console.log(`Password not found, ${answers.name}`);
+    }
+  }
+}
+
+validateAccess();

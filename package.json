@@ -1,0 +1,24 @@
+{
+  "name": "pw-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "inquirer": "^7.3.3",
+    "minimist": "^1.2.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Naasgul/pw-manager.git"
+  },
+  "author": "Lucas Naas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Naasgul/pw-manager/issues"
+  },
+  "homepage": "https://github.com/Naasgul/pw-manager#readme"
+}
