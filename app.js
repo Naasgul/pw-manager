@@ -1,4 +1,54 @@
+const { askForMasterPassword } = require("./components/askForMasterPassword");
+const {
+  isMasterPasswordCorrect,
+} = require("./components/isMasterPasswordCorrect");
+const { askForPasswordInSafe } = require("./components/askForPasswordInSafe");
+const { getPasswordData } = require("./components/getPasswordData");
 const inquirer = require("inquirer");
+const CryptoJS = require("crypto-js");
+const fs = require("fs").promises;
+
+async function runPasswordManager() {
+  const userInputMasterPassword = await askForMasterPassword();
+  if (!isMasterPasswordCorrect(userInputMasterPassword)) {
+    runPasswordManager();
+  }
+
+  console.log("Correct Password");
+
+  const args = process.argv.slice(2);
+  const passwordName = args[0];
+  const newPasswordValue = args[1];
+
+  /*  const chosenPassword = await askForPasswordInSafe(); */
+  if (passwordName) {
+    const passwordSafe = getPasswordData(passwordName);
+    if (newPasswordValue) {
+      passwordSafe[passwordName] = CryptoJS.AES.encrypt(
+        newPasswordValue,
+        "123"
+      ).toString();
+
+      fs.writeFile("./db.json", JSON.stringify(passwordSafe, null, 2));
+      console.log("Your password was changed successfully");
+    } else {
+      const passwordData = await getPasswordData(passwordName);
+      console.log(passwordData);
+    }
+  } else {
+    console.log("Password not found!");
+  }
+}
+
+runPasswordManager();
+
+/* const inquirer = require("inquirer");
+
+  if (masterPassword === answers.password) {
+    console.log(`Correct Password, ${answers.name} `);
+  } else {
+    console.log(`Wrong Password`);
+  }
 
 const args = process.argv.slice(2);
 
@@ -68,3 +118,4 @@ async function validateAccess() {
 }
 
 validateAccess();
+ */
