@@ -1,11 +1,7 @@
-const masterPassword = "123";
+const { getMasterPassword } = require("./getMasterPassword");
 
-function isMasterPasswordCorrect(userInputMasterPassword) {
-  if (userInputMasterPassword === masterPassword) {
-    return masterPassword;
-  } else {
-    console.log("Wrong Password");
-  }
+async function isMasterPasswordCorrect(userInputMasterPassword) {
+  return userInputMasterPassword === (await getMasterPassword());
 }
 
 exports.isMasterPasswordCorrect = isMasterPasswordCorrect;
