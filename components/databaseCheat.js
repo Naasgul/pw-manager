@@ -24,12 +24,15 @@ function collection(name) {
 //4. read Data from DB
 async function readData(db, name) {
   const password = await db.findOne({ id: name });
-  const decryptedPassword = await CryptoJS.AES.decrypt(
-    password.password,
-    process.env.CRYPTO_PW
-  );
-
-  return decryptedPassword.toString(CryptoJS.enc.Utf8);
+  if (password.id === "") {
+    console.log("Password not found!");
+  } else {
+    const decryptedPassword = await CryptoJS.AES.decrypt(
+      password.password,
+      process.env.CRYPTO_PW
+    );
+    return decryptedPassword.toString(CryptoJS.enc.Utf8);
+  }
 }
 
 //5. Insert data in DB
