@@ -26,6 +26,7 @@ async function readData(db, name) {
   const password = await db.findOne({ id: name });
   if (password.id === "") {
     console.log("Password not found!");
+    
   } else {
     const decryptedPassword = await CryptoJS.AES.decrypt(
       password.password,
