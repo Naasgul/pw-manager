@@ -11,7 +11,7 @@ const {
 } = require("./components/databaseCheat");
 const app = express();
 app.use(express.json());
-const port = 3000;
+const port = 3002;
 
 app.get("/api/passwords/:id", async (request, response) => {
   const { id } = request.params;
