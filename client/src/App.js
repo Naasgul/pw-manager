@@ -40,11 +40,11 @@ function App() {
   return (
     <div className="App">
       <h1>Password Manager</h1>
-      <Get />
-      {/*  <form onSubmit={handleSubmit}>
+
+      <form onSubmit={handleSubmit}>
         Name:
         <input type="text" value={searchPassword} onChange={handleChange} />
-      </form> */}
+      </form>
 
       <h3>{data}</h3>
       {loading && <div>Loading...</div>}
