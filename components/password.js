@@ -27,7 +27,7 @@ async function askForPasswordInSafe() {
 async function setPassword(newPassword) {
   passwordSafe[passwordName] = CryptoJS.AES.encrypt(
     newPasswordValue,
-    await getMasterPassword()
+    getMasterPassword()
   ).toString();
   fs.writeFile("./db.json", JSON.stringify(passwordSafe, null, 2));
   console.log("Your password was changed successfully");

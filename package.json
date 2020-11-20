@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "concurrently": "^5.3.0",
     "crypto-js": "^4.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -12,10 +13,22 @@
     "mongodb": "^3.6.3",
     "nodemon": "^2.0.6"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@storybook/addon-actions": "^6.1.0",
+    "@storybook/addon-essentials": "^6.1.0",
+    "@storybook/addon-links": "^6.1.0",
+    "@storybook/react": "^6.1.0",
+    "babel-loader": "^8.2.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server.js",
+    "client": "cd client && npm start",
+    "storybook": "cd client && npm run storybook",
+    "build-storybook": "build-storybook",
+    "postinstall": "cd client && npm install"
   },
   "repository": {
     "type": "git",
