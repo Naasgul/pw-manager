@@ -28,7 +28,8 @@
     "client": "cd client && npm start",
     "storybook": "cd client && npm run storybook",
     "build-storybook": "build-storybook",
-    "postinstall": "cd client && npm install"
+    "postinstall": "cd client && npm install",
+    "build": "react-scripts build"
   },
   "repository": {
     "type": "git",

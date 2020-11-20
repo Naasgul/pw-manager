@@ -8,4 +8,5 @@ export default {
   parameters: { layout: "centered" },
   component: Get,
 };
+
 export const FormElement = () => <Get />;
